@@ -14,6 +14,10 @@ Version: 1.0
 define('FP_BUILDER', '1.0');
 
 
+// Plugin label
+define('FP_BUILDER_SUBMISSION_LABEL', 'FP Builder');
+
+
 // Directory seperator constant
 define("FP_BUILDER_DS", DIRECTORY_SEPARATOR);
 
@@ -43,7 +47,15 @@ define('FP_BUILDER_PLUGIN_DIR', untrailingslashit(dirname(FP_BUILDER_PLUGIN)));
 
 
 // packages path
-define('FP_BUILDER_PLUGIN_PACKAGES_DIR', FP_BUILDER_PLUGIN_NAME . '/packages');
+define('FP_BUILDER_PLUGIN_PACKAGES_DIR', WP_PLUGIN_DIR . FP_BUILDER_DS . FP_BUILDER_PLUGIN_NAME . FP_BUILDER_DS . 'packages' . FP_BUILDER_DS);
+
+
+// packages path
+define('FP_BUILDER_PLUGIN_HELPER_DIR', WP_PLUGIN_DIR . FP_BUILDER_DS . FP_BUILDER_PLUGIN_NAME . FP_BUILDER_DS . 'helper' . FP_BUILDER_DS);
+
+
+// plugin directory
+define('FP_BUILDER_PLUGIN_URL', plugins_url('/', FP_BUILDER_PLUGIN));
 
 
 if (!class_exists('FPLoader')) {
@@ -58,7 +70,7 @@ if (!class_exists('FPLoader')) {
     //Start this plugin
     if (function_exists('add_filter')) {
 
-        add_action('plugins_loaded', array('FPLoader', 'get_instance'), 11);
+        add_action('plugins_loaded', array('FPLoader', 'FPLoad'), 11);
 
         require_once FP_BUILDER_PLUGIN_DIR . FP_BUILDER_DS . 'FPLoader.php';
     }

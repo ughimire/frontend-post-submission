@@ -5,26 +5,67 @@ class FPLoader
 
     private $registeredPackages = array();
 
-    public function __construct()
+    private static $instance = null;
+
+    public static function FPLoad()
     {
 
-        spl_autoload_register(array($this, 'Autoloader'));
+        if (self::$instance == null) {
 
-        $this->RegisterAndLoadPackages();
+            self::$instance = new FPLoader();
+
+        }
+        spl_autoload_register(array(self::$instance, 'Autoloader'));
+
+        self::$instance->LoadHelper();
+
+        self::$instance->RegisterAndLoadPackages();
 
     }
 
-    function Autoloader()
+    function LoadHelper()
     {
+        $helperPath = FP_BUILDER_PLUGIN_HELPER_DIR . 'helper.php';
+
+        if (file_exists($helperPath)) {
+
+
+            require_once $helperPath;
+
+        }
+
+    }
+
+    function Autoloader($class)
+    {
+        $package = array_search($class, $this->registeredPackages);
+
+        if ($package == "" || $package == null) {
+
+            throw  new Exception("package not found.");
+        }
+
+        $classFilePath = FP_BUILDER_PLUGIN_PACKAGES_DIR . $package . FP_BUILDER_DS . $class . '.php';
+
+
+        if (!file_exists($classFilePath)) {
+
+
+            throw  new Exception("package main class not found.File " . $classFilePath);
+
+        }
+        require_once $classFilePath;
 
 
     }
 
     // Get instance of package
-    private function GetInstance()
+    private static function GetInstance($packageName)
     {
 
+        $instance = new self::$instance->registeredPackages[$packageName];
 
+        return $instance;
     }
 
     private function RegisterPackages($packages = array())
@@ -37,7 +78,6 @@ class FPLoader
 
         $this->registeredPackages = $packages;
 
-        // add_action('init', array($this, 'register_shortcodes'));
 
     }
 
@@ -47,12 +87,15 @@ class FPLoader
 
         $this->RegisterPackages(array(
 
-                "shortcode" => "FPShortCode" // Key == Package directory name and Value is Package Main class name
+                "shortcode" => "FPShortCode", // Key == Package directory name and Value is Package Main class name
 
+                "admin-setting" => "FPAdminSetting"
             )
         );
 
         $this->LoadPackage("shortcode");
+
+        $this->LoadPackage("admin-setting");
 
     }
 
@@ -66,9 +109,12 @@ class FPLoader
 
             }
 
+            self::getInstance($packageName)->Load();
+
         } catch (Exception $e) {
 
 
+            echo '<h1>' . $e->getMessage() . '</h1>';
         }
 
     }
