@@ -35,7 +35,7 @@ class  FPAdminSetting
         //add_action("wp_enqueue_scripts", "move_me_around_scripts", 10);
         $this->move_me_around_scripts();
 
-        add_menu_page(FP_BUILDER_SUBMISSION_LABEL, FP_BUILDER_SUBMISSION_LABEL, 'manage_options', FP_BUILDER_PLUGIN_NAME, array($this, 'moveit_callback'));
+        add_menu_page(FP_BUILDER_SUBMISSION_LABEL, FP_BUILDER_SUBMISSION_LABEL, 'manage_options', FP_BUILDER_PLUGIN_NAME, array($this, 'create_admin_page'));
 
     }
 
@@ -44,35 +44,11 @@ class  FPAdminSetting
     {
         wp_enqueue_script(
             'move-it',
-            FP_BUILDER_PLUGIN_URL. 'moveit.js', // <----- get_stylesheet_directory_uri() if used in a theme
+            FP_BUILDER_PLUGIN_URL . 'moveit.js', // <----- get_stylesheet_directory_uri() if used in a theme
             array('jquery-ui-sortable', 'jquery') // <---- Dependencies
         );
     }
 
-    function moveit_callback()
-    {
-
-        ?>
-        <div class="wrap">
-            <h2>I like to move it, move it</h2>
-            <div class="meta-box-sortables ui-sortable">
-                <div class="postbox" id="p1">
-                    <h3 class="hndle">Drag me around, babe</h3>
-                    <div class="container">
-                        <p>Your content goes here</p>
-                    </div>
-                </div><!-- .postbox -->
-                <div class="postbox" id="p2">
-                    <h3 class="hndle">Drag me, too</h3>
-                    <div class="container">
-                        <p>Your content goes here, again</p>
-                    </div>
-                </div><!-- .postbox -->
-            </div><!-- .meta-box-sortables.ui-sortable-->
-        </div><!-- .wrap -->
-
-        <?php
-    }
 
     /**
      * Options page callback
@@ -81,38 +57,14 @@ class  FPAdminSetting
     {
         // Set class property
         $this->options = get_option('my_option_name');
-        ?>
-        <!-- <div class="wrap">
-            <h1>My Settings</h1>
-            <form method="post" action="options.php">
-                <?php
-        /*                // This prints out all hidden setting fields
-                        settings_fields('my_option_group');
-                        do_settings_sections('my-setting-admin');
-                        submit_button();
-                        */
-        ?>
-            </form>
-        </div>-->
 
-        <div class="wrap">
-            <h2>I like to move it, move it</h2>
-            <div class="meta-box-sortables ui-sortable">
-                <div class="postbox" id="p1">
-                    <h3 class="hndle">Drag me around, babe</h3>
-                    <div class="container">
-                        <p>Your content goes here</p>
-                    </div>
-                </div><!-- .postbox -->
-                <div class="postbox" id="p2">
-                    <h3 class="hndle">Drag me, too</h3>
-                    <div class="container">
-                        <p>Your content goes here, again</p>
-                    </div>
-                </div><!-- .postbox -->
-            </div><!-- .meta-box-sortables.ui-sortable-->
-        </div><!-- .wrap -->
-        <?php
+        $data = array(
+            "Label" => "This is heading of the plugin"
+
+
+        );
+
+        LoadView("admin-setting", $data);
     }
 
     /**
