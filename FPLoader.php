@@ -40,9 +40,11 @@ class FPLoader
     {
         $package = array_search($class, $this->registeredPackages);
 
+
         if ($package == "" || $package == null) {
 
-            throw  new Exception("package not found.");
+
+            return;
         }
 
         $classFilePath = FP_BUILDER_PLUGIN_PACKAGES_DIR . $package . FP_BUILDER_DS . $class . '.php';
