@@ -5,6 +5,8 @@ class  FPAdminSetting
 {
     private $options;
 
+
+
     public function Load()
     {
 
@@ -13,6 +15,7 @@ class  FPAdminSetting
 
         add_action('admin_menu', array($this, 'RenderAdminPage'));
 
+        //add_action('admin_notices', array($this, 'sample_admin_notice__error'));
 
     }
 
@@ -45,11 +48,39 @@ class  FPAdminSetting
     public function create_admin_page()
     {
         // Set class property
-        $this->options = get_option('my_option_name');
+        $this->options = get_option('fp_post_option_name');
+
+        $sortingOrder = $this->options['fp_sortable_list_json'];
+
+        $formFields = array();
+
+        try {
+
+            $sortingOrderArray = json_decode($sortingOrder);
+
+            if (count($sortingOrderArray) < 1) {
+
+                throw new Exception("something wrong");
+            }
+
+            foreach ($sortingOrderArray as $field) {
+
+                $formFields[$field] = FPForm::$formFields[$field];
+            }
+
+
+        } catch (Exception $e) {
+
+            $formFields = FPForm::$formFields;
+
+        }
+
 
         $data = array(
-            "Label" => "This is heading of the plugin",
-            "Options" => $this->options
+            "label" => "This is heading of the plugin",
+            "options" => $this->options,
+            "formField" => $formFields,
+            "prifix" => FPForm::$visiblePrefix
 
 
         );
@@ -68,28 +99,6 @@ class  FPAdminSetting
             array($this, 'sanitize') // Sanitize
         );
 
-        /* add_settings_section(
-             'setting_section_id', // ID
-             'My Custom Settings', // Title
-             array($this, 'print_section_info'), // Callback
-             'my-setting-admin' // Page
-         );*/
-
-        /*add_settings_field(
-            'id_number', // ID
-            'ID Number', // Title
-            array($this, 'id_number_callback'), // Callback
-            'my-setting-admin', // Page
-            'setting_section_id' // Section
-        );*/
-
-        /*  add_settings_field(
-              'title',
-              'Title',
-              array($this, 'title_callback'),
-              'my-setting-admin',
-              'setting_section_id'
-          );*/
     }
 
     /**
@@ -99,18 +108,63 @@ class  FPAdminSetting
      */
     public function sanitize($input)
     {
+
+        $formFields = FPForm::$formFields;
+
+        /* if (null == $input['post_title_label']) {
+             add_settings_error(
+                 'requiredTextFieldEmpty',
+                 'empty',
+                 'Cannot be empty',
+                 'error'
+             );
+         }*/
         $new_input = array();
-        if (isset($input['id_number']))
-            $new_input['id_number'] = absint($input['id_number']);
 
-        if (isset($input['title']))
-            $new_input['title'] = sanitize_text_field($input['title']);
+        if (isset($input[$formFields['post_title']['admin_key']]))
 
-        if (isset($input['post_title_label']))
-            $new_input['post_title_label'] = sanitize_text_field($input['post_title_label']);
+            $new_input[$formFields['post_title']['admin_key']] = ($input[$formFields['post_title']['admin_key']]);
+
+        if (isset($input[$formFields['author_name']['admin_key']]))
+            $new_input[$formFields['author_name']['admin_key']] = ($input[$formFields['author_name']['admin_key']]);
+
+        if (isset($input[$formFields['content']['admin_key']]))
+
+            $new_input[$formFields['content']['admin_key']] = ($input[$formFields['content']['admin_key']]);
+
+        if (isset($input[$formFields['feature_image']['admin_key']]))
+
+            $new_input[$formFields['feature_image']['admin_key']] = ($input[$formFields['feature_image']['admin_key']]);
+
+        if (isset($input["fp_sortable_list_json"]))
+
+            $new_input["fp_sortable_list_json"] = ($input["fp_sortable_list_json"]);
+
+
+        foreach ($formFields as $key => $form) {
+
+
+            if (isset($input[FPForm::$visiblePrefix. $form["admin_key"]])) {
+
+                $new_input[FPForm::$visiblePrefix. $form["admin_key"]] = 1;
+
+            } else {
+
+
+                $new_input[FPForm::$visiblePrefix. $form["admin_key"]] = 0;
+
+            }
+
+        }
 
         return $new_input;
     }
 
+    function sample_admin_notice__error()
+    {
+        $class = 'notice notice-error';
+        $message = __('Irks! An error has occurred.', 'sample-text-domain');
 
+        printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
+    }
 }

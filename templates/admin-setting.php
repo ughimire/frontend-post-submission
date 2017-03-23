@@ -1,43 +1,48 @@
 <div class="wrap">
-    <h2>Label is : <?= $Label; ?></h2>
+    <h2>Label is : <?= $label; ?></h2>
     <form method="post" action="options.php">
         <div class="meta-box-sortables ui-sortable">
+            <?php settings_errors(); ?>
+
+
 
             <?php
+
+
             settings_fields('fp_post_option_group');
 
 
-            ?>
+            foreach ($formField as $fieldKey => $fieldArray) {
+                ?>
 
-            <div class="postbox" id="p1">
-                <h3 class="hndle">Post Title</h3>
-                <div class="container">
-                    <p>Your content goes here</p>
-                    <?php printf('<input type="text" id="id_number" name="fp_post_option_name[id_number]" value="%s" />', isset($Options['id_number']) ? esc_attr($Options['id_number']) : '') ?>
-                    <?php printf('<input type="text" id="post_title_label" name="fp_post_option_name[post_title_label]" value="%s" />', isset($Options['post_title_label']) ? esc_attr($Options['post_title_label']) : '') ?>
+                <div class="postbox fp_setting_sortable" id="<?= $fieldKey ?>" style="padding:20px">
+                    <h3 class="hndle"><?= $fieldArray["label"]; ?></h3>
+                    <div class="container">
+                        <p>Please enter label</p>
+                        <?php printf('<input size="40" type="text" id="%s" name="fp_post_option_name[%s]" value="%s" />', $fieldArray["admin_key"], $fieldArray["admin_key"], isset($options[$fieldArray["admin_key"]]) ? esc_attr($options[$fieldArray["admin_key"]]) : '') ?>
+                        <label
+                            for="isVisible"><span
+                                style="margin-left:10px;margin-right:10px;"> Show in frontend ? </span><?php printf('<input type="checkbox" id="%s" name="fp_post_option_name[%s]" value="1" %s/>',
+                                $prifix . $fieldArray["admin_key"], $prifix . $fieldArray["admin_key"],
+                                isset($options[$prifix . $fieldArray["admin_key"]]) ? $options[$prifix . $fieldArray["admin_key"]] == 1 ? 'checked="checked"' : '' : ''
+                            ) ?>
+                        </label>
+                    </div>
                 </div>
-            </div><!-- .postbox -->
-            <div class="postbox" id="p2">
-                <h3 class="hndle">Author Name</h3>
-                <div class="container">
-                    <p>Your content goes here, again</p>
-                </div>
-            </div><!-- .postbox -->
 
-        </div><!-- .meta-box-sortables.ui-sortable-->
-        <?php submit_button(); ?>
+            <?php } ?>
+
+            <?php
+
+            printf('<input size="40" type="hidden" id="fp_sortable_list_json" name="fp_post_option_name[fp_sortable_list_json]" value="%s" />',
+
+                (isset($options["fp_sortable_list_json"]) ? esc_attr($options["fp_sortable_list_json"]) : ''
+                )
+            );
+
+
+            submit_button(); ?>
     </form>
 </div><!-- .wrap -->
 
 
-<div class="wrap">
-    <h1>My Settings</h1>
-    <form method="post" action="options.php">
-        <?php
-        // This prints out all hidden setting fields
-        // settings_fields('my_option_group');
-
-
-        ?>
-    </form>
-</div>

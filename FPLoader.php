@@ -91,14 +91,25 @@ class FPLoader
 
                 "shortcode" => "FPShortCode", // Key == Package directory name and Value is Package Main class name
 
-                "admin-setting" => "FPAdminSetting"
+                "admin-setting" => "FPAdminSetting",
+
+                "form" => "FPForm",
+
+                "actions" => "FPActions"
+
             )
         );
 
+
         $this->LoadPackage("shortcode");
 
-        $this->LoadPackage("admin-setting");
+        if (is_admin()) {
 
+            $this->LoadPackage("admin-setting");
+        }
+        $this->LoadPackage("form");
+
+        $this->LoadPackage("actions");
     }
 
     private function LoadPackage($packageName)
