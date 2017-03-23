@@ -73,7 +73,7 @@ if (!class_exists('FPLoader')) {
     //Start this plugin
     if (function_exists('add_filter')) {
 
-        add_action('plugins_loaded', array('FPLoader', 'FPLoad'), 11);
+        add_action('plugins_loaded', array('FPLoader', 'fpLoad'), 11);
 
         require_once FP_BUILDER_PLUGIN_DIR . FP_BUILDER_DS . 'FPLoader.php';
     }

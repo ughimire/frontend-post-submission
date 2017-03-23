@@ -18,10 +18,10 @@ if (!function_exists("pp")) {
         }
     }
 }
-if (!function_exists("LoadView")) {
+if (!function_exists("load_plugin_view")) {
 
 
-    function LoadView($viewName, $data = array())
+    function load_plugin_view($viewName, $data = array())
     {
 
 

@@ -18,13 +18,7 @@ class FPForm
 
     );
 
-    public function Load()
-    {
-
-
-    }
-
-    public function getOrder()
+    public function load()
     {
 
 

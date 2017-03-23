@@ -7,7 +7,9 @@ class FPLoader
 
     private static $instance = null;
 
-    public static function FPLoad()
+
+    // Plugin initialize from here
+    public static function fpLoad()
     {
 
         if (self::$instance == null) {
@@ -15,15 +17,16 @@ class FPLoader
             self::$instance = new FPLoader();
 
         }
-        spl_autoload_register(array(self::$instance, 'Autoloader'));
+        spl_autoload_register(array(self::$instance, 'autoloader'));
 
-        self::$instance->LoadHelper();
+        self::$instance->loadHelper();
 
-        self::$instance->RegisterAndLoadPackages();
+        self::$instance->registerAndLoadPackages();
 
     }
 
-    function LoadHelper()
+// load helper (where  common functions are located for this plugin)
+    function loadHelper()
     {
         $helperPath = FP_BUILDER_PLUGIN_HELPER_DIR . 'helper.php';
 
@@ -36,7 +39,8 @@ class FPLoader
 
     }
 
-    function Autoloader($class)
+// autoloader method for the plugin. Autoload packages
+    function autoloader($class)
     {
         $package = array_search($class, $this->registeredPackages);
 
@@ -62,7 +66,7 @@ class FPLoader
     }
 
     // Get instance of package
-    private static function GetInstance($packageName)
+    private static function getInstance($packageName)
     {
 
         $instance = new self::$instance->registeredPackages[$packageName];
@@ -70,7 +74,8 @@ class FPLoader
         return $instance;
     }
 
-    private function RegisterPackages($packages = array())
+    // register new package
+    private function registerPackages($packages = array())
     {
 
         if (count(array_keys($packages)) != count(array_values($packages))) {
@@ -84,10 +89,10 @@ class FPLoader
     }
 
 // Register and auto load packages
-    private function RegisterAndLoadPackages()
+    private function registerAndLoadPackages()
     {
 
-        $this->RegisterPackages(array(
+        $this->registerPackages(array(
 
                 "shortcode" => "FPShortCode", // Key == Package directory name and Value is Package Main class name
 
@@ -101,18 +106,18 @@ class FPLoader
         );
 
 
-        $this->LoadPackage("shortcode");
+        $this->loadPackage("shortcode");
 
         if (is_admin()) {
 
-            $this->LoadPackage("admin-setting");
+            $this->loadPackage("admin-setting");
         }
-        $this->LoadPackage("form");
+        $this->loadPackage("form");
 
-        $this->LoadPackage("actions");
+        $this->loadPackage("actions");
     }
 
-    private function LoadPackage($packageName)
+    private function loadPackage($packageName)
     {
         try {
 
@@ -122,7 +127,7 @@ class FPLoader
 
             }
 
-            self::getInstance($packageName)->Load();
+            self::getInstance($packageName)->load();
 
         } catch (Exception $e) {
 

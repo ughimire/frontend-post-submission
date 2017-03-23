@@ -5,29 +5,27 @@ class  FPAdminSetting
 {
     private $options;
 
-
-
-    public function Load()
+    // default fuction - it calls from registerPackage method of FPLoader class
+    public function load()
     {
 
 
-        add_action('admin_init', array($this, 'page_init'));
+        add_action('admin_init', array($this, 'pluginInitAdmin'));
 
-        add_action('admin_menu', array($this, 'RenderAdminPage'));
+        add_action('admin_menu', array($this, 'renderAdminPage'));
 
-        //add_action('admin_notices', array($this, 'sample_admin_notice__error'));
 
     }
 
     /**
      * Option page for plugin
      */
-    public function RenderAdminPage()
+    public function renderAdminPage()
     {
 
         $this->loadScript();
 
-        add_menu_page(FP_BUILDER_SUBMISSION_LABEL, FP_BUILDER_SUBMISSION_LABEL, 'manage_options', FP_BUILDER_PLUGIN_NAME, array($this, 'create_admin_page'));
+        add_menu_page(FP_BUILDER_SUBMISSION_LABEL, FP_BUILDER_SUBMISSION_LABEL, 'manage_options', FP_BUILDER_PLUGIN_NAME, array($this, 'createAdminPage'));
 
     }
 
@@ -35,8 +33,8 @@ class  FPAdminSetting
     function loadScript()
     {
         wp_enqueue_script(
-            'move-it',
-            FP_BUILDER_PLUGIN_URL . 'moveit.js', // <----- get_stylesheet_directory_uri() if used in a theme
+            'fp-admin',
+            FP_BUILDER_PLUGIN_URL . 'js/fp-admin.js', // <----- get_stylesheet_directory_uri() if used in a theme
             array('jquery-ui-sortable', 'jquery') // <---- Dependencies
         );
     }
@@ -45,7 +43,7 @@ class  FPAdminSetting
     /**
      * Options page callback
      */
-    public function create_admin_page()
+    public function createAdminPage()
     {
         // Set class property
         $this->options = get_option('fp_post_option_name');
@@ -60,7 +58,7 @@ class  FPAdminSetting
 
             if (count($sortingOrderArray) < 1) {
 
-                throw new Exception("something wrong");
+                $sortingOrderArray = array_keys(FPForm::$formFields);
             }
 
             foreach ($sortingOrderArray as $field) {
@@ -77,21 +75,21 @@ class  FPAdminSetting
 
 
         $data = array(
-            "label" => "This is heading of the plugin",
+            "pluginHeading" => "Frontend Post Submission Plugin",
             "options" => $this->options,
             "formField" => $formFields,
-            "prifix" => FPForm::$visiblePrefix
+            "prefix" => FPForm::$visiblePrefix
 
 
         );
 
-        LoadView("admin-setting", $data);
+        load_plugin_view("admin-setting", $data);
     }
 
     /**
      * Register and add settings
      */
-    public function page_init()
+    public function pluginInitAdmin()
     {
         register_setting(
             'fp_post_option_group', // Option group
@@ -118,6 +116,8 @@ class  FPAdminSetting
                  'Cannot be empty',
                  'error'
              );
+
+            we can make validation of the form by this above commented script
          }*/
         $new_input = array();
 
@@ -144,14 +144,14 @@ class  FPAdminSetting
         foreach ($formFields as $key => $form) {
 
 
-            if (isset($input[FPForm::$visiblePrefix. $form["admin_key"]])) {
+            if (isset($input[FPForm::$visiblePrefix . $form["admin_key"]])) {
 
-                $new_input[FPForm::$visiblePrefix. $form["admin_key"]] = 1;
+                $new_input[FPForm::$visiblePrefix . $form["admin_key"]] = 1;
 
             } else {
 
 
-                $new_input[FPForm::$visiblePrefix. $form["admin_key"]] = 0;
+                $new_input[FPForm::$visiblePrefix . $form["admin_key"]] = 0;
 
             }
 
@@ -160,11 +160,5 @@ class  FPAdminSetting
         return $new_input;
     }
 
-    function sample_admin_notice__error()
-    {
-        $class = 'notice notice-error';
-        $message = __('Irks! An error has occurred.', 'sample-text-domain');
 
-        printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
-    }
 }
