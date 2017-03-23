@@ -80,10 +80,19 @@ class  FPActions
 
         if ($error == "") {
 
+            $post_information = array(
+                'post_title' => wp_strip_all_tags($_POST['fp_post_title']),
+                'post_content' => "Hello Wocntent",
+                'post_type' => 'post',
+                'post_status' => 'pending',
+                "post_author" => "Umesh ghimire nepal "
+            );
+
+            wp_insert_post($post_information);
             $redirect = $_POST['_wp_http_referer'] . add_query_arg('my-form', 'success', $redirect);
             wp_redirect($redirect);
 
-            echo "Form Valid";
+
         } else {
 
             echo "Not valid";
