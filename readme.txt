@@ -25,3 +25,8 @@ Configuration link for backend /wp-admin/admin.php?page=frontend-post-submission
 
 And user have to choice which field is visible for frontend and label customization.
 
+Some resource link that i have used while developting this plugin are as follows :
+
+i. https://wordpress.org/plugins/contact-form-7/
+ii. https://codex.wordpress.org
+
