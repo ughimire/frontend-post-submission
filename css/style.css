@@ -10,7 +10,7 @@
     font-size: 14px;
     font-style: italic;
     line-height: 24px;
-    font-weight: bold;
+    font-weight: normal ;
     color: #09C;
     text-decoration: none;
     border-radius: 10px;
@@ -28,7 +28,7 @@
 
 }
 
-#fpPostForm input {
+#fpPostForm .fp_form_group input {
     width: 100%;
     display: block;
     border: 1px solid #999;

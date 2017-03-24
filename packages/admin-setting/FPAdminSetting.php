@@ -45,8 +45,9 @@ class  FPAdminSetting
      */
     public function createAdminPage()
     {
-        // Set class property
+       
         $this->options = get_option('fp_post_option_name');
+
 
         $sortingOrder = $this->options['fp_sortable_list_json'];
 
