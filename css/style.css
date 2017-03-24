@@ -139,3 +139,12 @@
 #fpPostForm textarea:focus, #fpPostForm input:focus {
     border: 1px solid #09C;
 }
+
+#fpPostForm .form-group {
+
+}
+
+#fpPostForm .error {
+    color: red !important;
+
+}

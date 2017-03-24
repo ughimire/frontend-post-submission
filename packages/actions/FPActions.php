@@ -102,7 +102,7 @@ class  FPActions
 
             $post_information = array(
                 'post_title' => isset($_POST['post_title']) ? wp_strip_all_tags($_POST['post_title']) : "",
-                'post_content' => isset($_POST['content']) ? ($_POST['content']) : "",
+                'post_content' => isset($_POST['post_content']) ? ($_POST['post_content']) : "",
                 'post_type' => 'post',
                 'post_status' => 'pending',
                 'post_author' => ''

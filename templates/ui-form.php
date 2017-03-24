@@ -17,8 +17,8 @@ if (count($formField) > 0) {
 
             <?php
 
-            foreach ($formField as $fieldKey => $fieldArray) {
 
+            foreach ($formField as $fieldKey => $fieldArray) {
 
                 load_plugin_view("parts/_" . $fieldKey, $fieldArray);
 
@@ -26,7 +26,7 @@ if (count($formField) > 0) {
 
 
             <div class="form-group">
-                <label for="content"> </label>
+                <label for="post_content"> </label>
                 <button type="submit" class="btn btn-primary fpSubmitButton" style="float:right">Submit</button>
             </div>
             <?php
@@ -44,10 +44,3 @@ if (count($formField) > 0) {
     echo "<h2>No form field specify</h2>";
 
 } ?>
-<script type="text/javascript">
-
-    $("#fpPostForm").validate({
-        errorElement: 'span',
-
-    });
-</script>

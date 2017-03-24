@@ -11,7 +11,7 @@ class FPForm
 
         "author_name" => array("label" => "Author Name", "admin_key" => "fp_author_name"),
 
-        "content" => array("label" => "Content", "admin_key" => "fp_content"),
+        "post_content" => array("label" => "Content", "admin_key" => "fp_content"),
 
         "feature_image" => array("label" => "Feature Image", "admin_key" => "fp_feature_image"),
 

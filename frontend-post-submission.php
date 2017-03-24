@@ -13,6 +13,8 @@ Version: 1.0
 // Plugin Name and its version
 define('FP_BUILDER', '1.0');
 
+ini_set('display_errors', 0);
+error_reporting(0);
 
 // Plugin label
 define('FP_BUILDER_SUBMISSION_LABEL', 'FP Builder');

@@ -7,6 +7,7 @@
             settings_fields('fp_post_option_group');
 
             foreach ($formField as $fieldKey => $fieldArray) {
+
                 ?>
 
                 <div class="postbox fp_setting_sortable" id="<?= $fieldKey ?>" style="padding:20px">

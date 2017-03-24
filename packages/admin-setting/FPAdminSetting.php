@@ -128,9 +128,9 @@ class  FPAdminSetting
         if (isset($input[$formFields['author_name']['admin_key']]))
             $new_input[$formFields['author_name']['admin_key']] = ($input[$formFields['author_name']['admin_key']]);
 
-        if (isset($input[$formFields['content']['admin_key']]))
+        if (isset($input[$formFields['post_content']['admin_key']]))
 
-            $new_input[$formFields['content']['admin_key']] = ($input[$formFields['content']['admin_key']]);
+            $new_input[$formFields['post_content']['admin_key']] = ($input[$formFields['post_content']['admin_key']]);
 
         if (isset($input[$formFields['feature_image']['admin_key']]))
 

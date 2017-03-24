@@ -20,15 +20,18 @@ class  FPShortCode
     function addScriptsAndStyles()
     {
 
+
         // Registering Scripts
-        wp_register_script('google-hosted-jquery', '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', false);
-        wp_register_script('jquery-validation-plugin', 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js', array('google-hosted-jquery'));
-        wp_register_style( 'second-style', FP_BUILDER_PLUGIN_URL .'css/style.css', array(), '1');
+        wp_register_script('fp-google-hosted-jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', false);
+        wp_register_script('fp-query-validation-plugin', 'https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js', array("fp-google-hosted-jquery"));
+
+        wp_register_script('fp-custom-script', FP_BUILDER_PLUGIN_URL . 'js/custom.js', array(), '1');
+        wp_register_style('fp-css', FP_BUILDER_PLUGIN_URL . 'css/style.css', array(), '1');
 
         // Enqueueing Scripts to the head section
-        wp_enqueue_script('google-hosted-jquery');
-        wp_enqueue_script('jquery-validation-plugin');
-        wp_enqueue_style( 'second-style' );
+        wp_enqueue_script('fp-google-hosted-jquery');
+        wp_enqueue_script('fp-jquery-validation-plugin');
+        wp_enqueue_style('fp-css');
     }
 
 
@@ -63,7 +66,6 @@ class  FPShortCode
 
             foreach ($sortingOrderArray as $field) {
 
-
                 if (isset($this->options[FPForm::$visiblePrefix . $adminFormField[$field]["admin_key"]])) {
 
                     if ($this->options[FPForm::$visiblePrefix . $adminFormField[$field]["admin_key"]] == 1) {
@@ -90,6 +92,7 @@ class  FPShortCode
 
 
         );
+
 
         load_plugin_view("ui-form", $data);
 
