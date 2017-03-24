@@ -47,6 +47,16 @@ class  FPActions
 
                                 $validation = false;
                                 break;
+                                
+                            } else {
+
+                                $mime = $_FILES[$field]['type'];
+
+                                if (($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) {
+
+                                    $validation = false;
+                                    break;
+                                }
                             }
 
                         } else {
