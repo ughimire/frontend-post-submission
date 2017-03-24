@@ -16,3 +16,14 @@ This Frontend post submission plugins gives you an interface to submit your post
 It can customizable from backend which field should show on interface and reorder those form field.
 
 After installing this plugin, it gives you a shortcode and you can use this shortcode on your page, post and text widget.
+
+
+All posts will save into default wordpress category with pending status,
+
+Author name will be visible only if you check custom field from screen option of wordpress backend.
+
+Configuration link for backend /wp-admin/admin.php?page=frontend-post-submission
+
+And user have to choice which field is visible for frontend and label customization.
+
+
