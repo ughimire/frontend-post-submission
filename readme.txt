@@ -1,32 +1,39 @@
-=== Frontend Post Submission ===
-Contributors: Umesh
+=== Plugin Name ===
+Contributors: ughimire1
 Donate link: http://umeshghimire.com.np
-Tags: posts,frontend,user post,auto post builder, post builder, post builder plugin, simple post builder,user post builder
-Requires at least: 3.5
-Tested up to: 4.7.3
-Stable tag: 4.9.6.2
+Tags: frontend post, wordpress post without login, wordpress plugin, post builder, poster,frontend post, post with image
+Requires at least: 3.0.1
+Tested up to: 4.3
+Stable tag: 4.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A Frontend post submission builder plugin to submit post from frontend.
+Frontend post submission without login
 
 == Description ==
-This Frontend post submission plugins gives you an interface to submit your post from frontend without logging in.
 
-It can customizable from backend which field should show on interface and reorder those form field.
+This is simple plugin to submit post from frontend without login.
 
-After installing this plugin, it gives you a shortcode and you can use this `[frontend-post-submission]` shortcode on your page, post and text widget.
 
-All posts will save into default wordpress category with pending status,
 
-Author name will be visible only if you check custom field from screen option of wordpress backend.
 
-Configuration link for backend /wp-admin/admin.php?page=frontend-post-submission
+== Installation ==
 
-And user have to choice which field is visible for frontend and label customization.
+1. Upload  whole `frontend-post-submission` folders file  to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Add nepali calender widget from appearence menu.
+1. You can add short code [frontend-post-submission] on post or pages or any text widgets.
 
-Some resource link that i have used while developting this plugin are as follows :
+== Frequently Asked Questions ==
+Do you have questions or issues with frontend post submission Plugin?
+1. Soon we are coming with full documentation.
 
-i. https://wordpress.org/plugins/contact-form-7/
-ii. https://codex.wordpress.org
+
+
+== Screenshots ==
+
+1. Frontend Post Submission plugin setting page with label and hide or show option
+2. Using shortcode inside post/page or widgets
+3. Frontend view of plugin(user interface without login mean it's public page)
+
 

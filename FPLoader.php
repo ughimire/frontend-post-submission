@@ -17,7 +17,7 @@ class FPLoader
             self::$instance = new FPLoader();
 
         }
-        spl_autoload_register(array(self::$instance, 'autoloader'));
+       
 
         self::$instance->loadHelper();
 
@@ -39,19 +39,19 @@ class FPLoader
 
     }
 
-// autoloader method for the plugin. Autoload packages
-    function autoloader($class)
+
+    // Get instance of package
+    private static function getInstance($packageName)
     {
-        $package = array_search($class, $this->registeredPackages);
+        $class = isset(self::$instance->registeredPackages[$packageName]) ? self::$instance->registeredPackages[$packageName] : "";
 
+        if ($class == "" || $class == null) {
 
-        if ($package == "" || $package == null) {
-
-
-            return;
+            throw new Exception("Package not exists");
         }
 
-        $classFilePath = FP_BUILDER_PLUGIN_PACKAGES_DIR . $package . FP_BUILDER_DS . $class . '.php';
+
+        $classFilePath = FP_BUILDER_PLUGIN_PACKAGES_DIR . $packageName . FP_BUILDER_DS . $class . '.php';
 
 
         if (!file_exists($classFilePath)) {
@@ -61,13 +61,6 @@ class FPLoader
 
         }
         require_once $classFilePath;
-
-
-    }
-
-    // Get instance of package
-    private static function getInstance($packageName)
-    {
 
         $instance = new self::$instance->registeredPackages[$packageName];
 
